@@ -1,0 +1,42 @@
+//Design Code
+module dec4x10(output reg [9:0]out,input [3:0]in);
+  always@*
+    begin
+      case(in)
+        4'b0000 : out=10'b0000000001;
+        4'b0001 : out=10'b0000000010;
+        4'b0010 : out=10'b0000000100;
+        4'b0011 : out=10'b0000001000;
+        4'b0100 : out=10'b0000010000;
+        4'b0101 : out=10'b0000100000;
+        4'b0110 : out=10'b0001000000;
+        4'b0111 : out=10'b0010000000;
+        4'b1000 : out=10'b0100000000;
+        4'b1001 : out=10'b1000000000;
+        default : out=10'bxxxxxxxxxx;
+      endcase
+    end
+endmodule
+
+//Test Bench Code
+module test();
+  wire [9:0]out;
+  reg [3:0]in;
+  dec4x10 dut(out,in);
+  integer i;
+  initial
+    begin
+      for(i=0;i<16;i=i+1)
+        begin
+          in=i;
+          #10;
+          if(!(out===10'bxxxxxxxxxx))
+            $display("in=%b,out=%b",in,out);
+        end
+    end
+  initial
+    begin
+      $dumpfile("test.vcd");
+      $dumpvars(1);
+    end
+endmodule
